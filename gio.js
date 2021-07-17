@@ -68,12 +68,20 @@ client.on('message', (channel, tags, message, self) => {
             .catch(err => console.error(err))
         })
     }
+    else if (command === 'bot') {
+        client.say(channel, `Viewers can recommend things they think I should be able to do, and we can code them live on stream. Here's my repo: https://github.com/rconjoe/bot_giovanna`)
+    }
+    else if (command === 'theme') {
+        client.say(channel, `Joe's VSC theme is Synthwave '84 by Robb Owen. (https://marketplace.visualstudio.com/items?itemName=RobbOwen.synthwave-vscode) It has some extra (source-modified) features for the 'glow' effect that it's nice to have checksum fixes for (https://marketplace.visualstudio.com/items?itemName=lehni.vscode-fix-checksums).`)
+    }
     else if (command === 'commands') {
         client.say(channel, `Things I can do rn: \n!commands
         !hello
         !echo
         !dice
+        !bot
         !project
+        !theme
         !fc
         !socials
         !discord
