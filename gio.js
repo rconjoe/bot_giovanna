@@ -18,10 +18,11 @@ client.connect()
 
 client.on('connected', (address, port) => {
     console.log(`connected at ${address}:${port}`)
+    client.say('#rcon_joe', `*stumbles in* I'm here I'm here. nodemon restarted me. @rcon_joe must have changed something...`)
 })
 
 client.on('message', (channel, tags, message, self) => {
-    if (self) {
+    if (self || !message.startsWith('!')) {
         return
     }
     const args = message.slice(1).split(' ')
@@ -31,6 +32,7 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`)
     }
     else if (command === 'hello') {
+        console.log(channel)
         client.say(channel, `@${tags.username}, sup l33t gaemer`)
     }
     else if (command === 'dice') {
@@ -44,16 +46,16 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, '4571-4110-9151')
     }
     else if (command === 'socials') {
-        client.say('https:twitter.com/rconjoe || https://instagr.am/trogdoor || https://blog.rconjoe.com || https://github.com/rconjoe || https://discord.gg/GM5TKXHE4X')
+        client.say(channel, `https:twitter.com/rconjoe || https://instagr.am/trogdoor || https://blog.rconjoe.com || https://github.com/rconjoe || https://discord.gg/GM5TKXHE4X`)
     }
     else if (command === 'discord') {
-        client.say('https://discord.gg/GM5TKXHE4X')
+        client.say(channel, 'https://discord.gg/GM5TKXHE4X')
     }
     else if (command === 'liveshare') {
-        client.say(`Here's a link to join my VSCode session, read-only. If you don't know how to use this, google VSCode Live Share Extension. https://prod.liveshare.vsengsaas.visualstudio.com/join?AAC0AFECE36F522199FC43AEC35D4F427466`)
+        client.say(channel, `Here's a link to join my VSCode session, read-only. If you don't know how to use this, google VSCode Live Share Extension. https://prod.liveshare.vsengsaas.visualstudio.com/join?403A2B141843FB3E5D0498777606BE765FE3`)
     }
-    else if (command === 'lgsm') {
-        client.say('https://linuxgsm.com')
+    else if (command === 'lgsm' || command === 'linuxgsm') {
+        client.say(channel, 'https://linuxgsm.com')
     }
     else if (command === 'flippy') {
         fs.readJson('./flippy.json', (err, packageObj) => {
@@ -65,5 +67,18 @@ client.on('message', (channel, tags, message, self) => {
             .then(() => console.log(`success: ${flippyCount}`))
             .catch(err => console.error(err))
         })
+    }
+    else if (command === 'commands') {
+        client.say(channel, `Things I can do rn: \n!commands
+        !hello
+        !echo
+        !dice
+        !project
+        !fc
+        !socials
+        !discord
+        !liveshare
+        !lgsm
+        !flippy`)
     }
 })
